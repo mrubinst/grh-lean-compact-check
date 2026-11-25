@@ -2,7 +2,7 @@
 
 Independent build and check of **lsernau/grh-lean**, folder `grh-compact`, commit `72fead102f663d5c7a407964a13dc0cf9d977207` (25 Nov 2026), on our own hardware (UWaterloo cpu160, local disk). Lean v4.35.0, Mathlib `56a00585` as pinned by the project. This page reports only our own runs.
 
-Last updated: 2026-11-25 23:39 UTC
+Last updated: 2026-11-25 23:49 UTC
 
 ## Plan
 1. `lake exe cache get` (Mathlib oleans from the Mathlib cache)
@@ -17,7 +17,8 @@ modules_total=0 built=0 replay_ok=0 replay_bad=0
 --- stages
 2026-11-25T23:38:03Z start host=cpu160 commit=72fead102f663d5c7a407964a13dc0cf9d977207 lean=Lean (version 4.35.0
 2026-11-25T23:38:03Z cache_get begin
---- load 350.34 329.18 245.85
+2026-11-25T23:39:48Z cache_get FAILED
+--- load 352.76 352.54 299.56
 --- axioms
 --- our_axioms
 --- buildtime
