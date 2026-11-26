@@ -58,14 +58,14 @@ footer{margin-top:3rem;color:var(--muted);font-size:.88rem}
 <body>
 <main>
 <h1>An independent check of the short Lean proof of RH and GRH</h1>
-<p class="sub">Checking the compact edition (about 76,000 lines) of the shortened Lean 4 proof posted by Luke Sernau with colleagues at Anthropic and Claude on 25 November 2026, a rewriting of the Alp&ouml;ge&ndash;Claude development. Last updated 2026-11-26 03:46 UTC.</p>
+<p class="sub">Checking the compact edition (about 76,000 lines) of the shortened Lean 4 proof posted by Luke Sernau with colleagues at Anthropic and Claude on 25 November 2026, a rewriting of the Alp&ouml;ge&ndash;Claude development. Last updated 2026-11-26 03:56 UTC.</p>
 <p class="sub"><a href="https://www.math.uwaterloo.ca/~mrubinst/alpoge_claude_grh/">&larr; Michael Rubinstein's page on the Alp&ouml;ge/Claude proof</a> &middot; <a href="https://mrubinst.github.io/grh-lean-verification/">our check of the original 17-million-line development</a> &middot; <a href="https://github.com/mrubinst/grh-lean-compact-check">GitHub repository</a> (scripts and the source of this page)</p>
 <div class="box status">
   <span class="badge wait">Compile, axioms and kernel replay complete; paranoid multi-kernel check running</span>
   <div>
     <strong>Where things stand.</strong> 794 of 794 modules compiled; kernel replay 794 accepted, 0 rejected.
     <div class="bar" aria-label="progress"><span style="width:85%"></span></div>
-    <div style="font-size:.9rem;color:var(--muted)">Server load on cpu160: load 426.32 422.72 416.02. This page reloads every 5 minutes and is regenerated every 10.</div>
+    <div style="font-size:.9rem;color:var(--muted)">Server load on cpu160: load 378.82 390.96 402.97. This page reloads every 5 minutes and is regenerated every 10.</div>
   </div>
 </div>
 <h2>Checklist</h2>
@@ -103,7 +103,8 @@ def RiemannHypothesis : Prop :=
 /u/mrubinst/grhc/comparator.log:Running Lean paranoid kernel on solution
 /u/mrubinst/grhc/comparator.log:Lean paranoid kernel accepts the solution
 /u/mrubinst/grhc/comparator.log:Running lean4lean kernel on solution
-/u/mrubinst/grhc/comparator.log:[anonymous]:thmDecl IdealFamily.exists_move_kernel: lean4lean took 42655</pre>
+/u/mrubinst/grhc/comparator.log:[anonymous]:thmDecl IdealFamily.exists_move_kernel: lean4lean took 42655
+/u/mrubinst/grhc/comparator.log:[anonymous]:thmDecl Data.conjHolWeight_kernelWeight_bounds._proof_1_9: lean4lean took 1052</pre>
 <h2>How we are building it</h2>
 <p>One server (cpu160, University of Waterloo), local disk, <code>lake build</code> at slightly lowered priority because the machine is shared. The open-file limit is raised to the hard limit (the first attempt failed while unpacking the Mathlib cache with the default limit of 1024). Kernel replay runs <code>lake env leanchecker</code> on each of the project's modules, 48 at a time. Every result on this page comes from our own runs.</p>
 <h2>What a successful check will and won't mean</h2>

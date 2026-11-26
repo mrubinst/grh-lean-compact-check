@@ -2,7 +2,7 @@
 
 Independent build and check of **lsernau/grh-lean**, folder `grh-compact`, commit `72fead102f663d5c7a407964a13dc0cf9d977207` (25 Nov 2026), on our own hardware (UWaterloo cpu160, local disk). Lean v4.35.0, Mathlib `56a00585` as pinned by the project. This page reports only our own runs.
 
-Last updated: 2026-11-26 03:46 UTC. Status page: https://mrubinst.github.io/grh-lean-compact-check/
+Last updated: 2026-11-26 03:56 UTC. Status page: https://mrubinst.github.io/grh-lean-compact-check/
 
 ## Plan
 1. `lake exe cache get` (Mathlib oleans from the Mathlib cache)
@@ -29,7 +29,7 @@ modules_total=794 built=795 replay_ok=794 replay_bad=0
 2026-11-26T00:31:58Z comparator attempt 1 begin (lake comparator --paranoid --inadvisably-no-sandbox; kernels: Lean, leanchecker-paranoid, lean4lean, nanoda, con-leche, con-ron)
 2026-11-26T00:31:58Z comparator attempt 1 did not start (nanoda_bin not on PATH); fixed and relaunched
 2026-11-26T00:33:06Z comparator_paranoid begin (lake comparator --paranoid --inadvisably-no-sandbox; kernels: Lean, leanchecker-paranoid, lean4lean, nanoda, con-leche, con-ron)
---- load 426.32 422.72 416.02
+--- load 378.82 390.96 402.97
 --- axioms
 'riemannHypothesis' depends on axioms: [propext, Classical.choice, Quot.sound]
 'riemannZeta_eq_zero_re' depends on axioms: [propext, Classical.choice, Quot.sound]
@@ -61,6 +61,7 @@ def RiemannHypothesis : Prop :=
 /u/mrubinst/grhc/comparator.log:Lean paranoid kernel accepts the solution
 /u/mrubinst/grhc/comparator.log:Running lean4lean kernel on solution
 /u/mrubinst/grhc/comparator.log:[anonymous]:thmDecl IdealFamily.exists_move_kernel: lean4lean took 42655
+/u/mrubinst/grhc/comparator.log:[anonymous]:thmDecl Data.conjHolWeight_kernelWeight_bounds._proof_1_9: lean4lean took 1052
 --- buildtime
 	Elapsed (wall clock) time (h:mm:ss or m:ss): 27:58.23
 	Maximum resident set size (kbytes): 9140112
