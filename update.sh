@@ -25,6 +25,7 @@ echo
 echo "## Statements"
 echo "\`src/Statements.lean\` (imports only Mathlib) is identical, apart from blank lines, to the one in the original Alpöge–Claude development we checked on 20–21 Nov 2026."
 } > README.md
+printf "%s\n" "$P" | python3 gen.py
 git add -A; git diff --cached --quiet || { git commit -qm "status $NOW"; git push -q origin HEAD:main 2>/dev/null; }
 grep -q "pipeline finished" <<<"$P" && echo FINISHED
 exit 0

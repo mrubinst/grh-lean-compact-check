@@ -2,7 +2,7 @@
 
 Independent build and check of **lsernau/grh-lean**, folder `grh-compact`, commit `72fead102f663d5c7a407964a13dc0cf9d977207` (25 Nov 2026), on our own hardware (UWaterloo cpu160, local disk). Lean v4.35.0, Mathlib `56a00585` as pinned by the project. This page reports only our own runs.
 
-Last updated: 2026-11-26 00:21 UTC
+Last updated: 2026-11-26 00:29 UTC
 
 ## Plan
 1. `lake exe cache get` (Mathlib oleans from the Mathlib cache)
@@ -13,7 +13,7 @@ Last updated: 2026-11-26 00:21 UTC
 
 ## Current state
 ```
-modules_total=794 built=794 replay_ok=190 replay_bad=0
+modules_total=794 built=794 replay_ok=794 replay_bad=0
 --- stages
 2026-11-25T23:49:38Z start host=cpu160 commit=72fead102f663d5c7a407964a13dc0cf9d977207 lean=Lean (version 4.35.0
 2026-11-25T23:49:38Z cache_get begin
@@ -24,7 +24,9 @@ modules_total=794 built=794 replay_ok=190 replay_bad=0
 2026-11-26T00:18:27Z axioms ok
 2026-11-26T00:18:40Z our_axioms ok
 2026-11-26T00:18:40Z replay begin
---- load 467.69 444.95 424.50
+2026-11-26T00:28:15Z replay done ok=794 bad=0
+2026-11-26T00:28:15Z pipeline finished
+--- load 431.19 451.90 438.78
 --- axioms
 'riemannHypothesis' depends on axioms: [propext, Classical.choice, Quot.sound]
 'riemannZeta_eq_zero_re' depends on axioms: [propext, Classical.choice, Quot.sound]
