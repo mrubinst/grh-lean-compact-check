@@ -58,14 +58,14 @@ footer{margin-top:3rem;color:var(--muted);font-size:.88rem}
 <body>
 <main>
 <h1>An independent check of the short Lean proof of RH and GRH</h1>
-<p class="sub">Checking the compact edition (about 76,000 lines) of the shortened Lean 4 proof posted by Luke Sernau with colleagues at Anthropic and Claude on 25 November 2026, a rewriting of the Alp&ouml;ge&ndash;Claude development. Last updated 2026-11-26 05:26 UTC.</p>
+<p class="sub">Checking the compact edition (about 76,000 lines) of the shortened Lean 4 proof posted by Luke Sernau with colleagues at Anthropic and Claude on 25 November 2026, a rewriting of the Alp&ouml;ge&ndash;Claude development. Last updated 2026-11-26 05:36 UTC.</p>
 <p class="sub"><a href="https://www.math.uwaterloo.ca/~mrubinst/alpoge_claude_grh/">&larr; Michael Rubinstein's page on the Alp&ouml;ge/Claude proof</a> &middot; <a href="https://mrubinst.github.io/grh-lean-verification/">our check of the original 17-million-line development</a> &middot; <a href="https://github.com/mrubinst/grh-lean-compact-check">GitHub repository</a> (scripts and the source of this page)</p>
 <div class="box status">
-  <span class="badge wait">Compile, axioms and kernel replay complete; paranoid multi-kernel check running</span>
+  <span class="badge ok">All checks complete</span>
   <div>
     <strong>Where things stand.</strong> 794 of 794 modules compiled; kernel replay 794 accepted, 0 rejected.
-    <div class="bar" aria-label="progress"><span style="width:85%"></span></div>
-    <div style="font-size:.9rem;color:var(--muted)">Server load on cpu160: load 467.35 458.25 448.65. This page reloads every 5 minutes and is regenerated every 10.</div>
+    <div class="bar" aria-label="progress"><span style="width:100%"></span></div>
+    <div style="font-size:.9rem;color:var(--muted)">Server load on cpu160: load 464.65 457.67 452.02. This page reloads every 5 minutes and is regenerated every 10.</div>
   </div>
 </div>
 <h2>Checklist</h2>
@@ -77,7 +77,7 @@ footer{margin-top:3rem;color:var(--muted);font-size:.88rem}
 <tr><td><span class="badge ok">Done</span></td><td><div class="what">Full compile of all 794 project modules</div><div class="how">794 of 794 compiled so far.</div></td></tr>
 <tr><td><span class="badge ok">Done</span></td><td><div class="what"><code>#print axioms</code> and types of the five main theorems</div><div class="how">Expected: only <code>propext</code>, <code>Classical.choice</code>, <code>Quot.sound</code>; each theorem has the type fixed in <code>Statements.lean</code>.</div></td></tr>
 <tr><td><span class="badge ok">Done</span></td><td><div class="what">Kernel replay of every module (<code>leanchecker</code>)</div><div class="how">794 of 794 accepted, 0 rejected.</div></td></tr>
-<tr><td><span class="badge wait">Running</span></td><td><div class="what"><code>lake comparator --paranoid</code>: same statements, axioms, and six kernels</div><div class="how">Compares the five theorems with <code>Challenge.lean</code> (the five statements with <code>sorry</code>), checks the axioms, and replays the export through Lean&rsquo;s kernel and the five external checkers bundled with Lean 4.35: <code>leanchecker-paranoid</code>, <code>lean4lean</code>, <code>nanoda</code>, <code>con-leche</code>, <code>con-ron</code>. Run with <code>--inadvisably-no-sandbox</code>: the cluster blocks the <code>bwrap</code> sandbox (AppArmor restricts unprivileged user namespaces), so this run does not have the sandbox guarantee against the project&rsquo;s own build code.</div></td></tr>
+<tr><td><span class="badge ok">Done</span></td><td><div class="what"><code>lake comparator --paranoid</code>: same statements, axioms, and six kernels</div><div class="how">Compares the five theorems with <code>Challenge.lean</code> (the five statements with <code>sorry</code>), checks the axioms, and replays the export through Lean&rsquo;s kernel and the five external checkers bundled with Lean 4.35: <code>leanchecker-paranoid</code>, <code>lean4lean</code>, <code>nanoda</code>, <code>con-leche</code>, <code>con-ron</code>. Run with <code>--inadvisably-no-sandbox</code>: the cluster blocks the <code>bwrap</code> sandbox (AppArmor restricts unprivileged user namespaces), so this run does not have the sandbox guarantee against the project&rsquo;s own build code.</div></td></tr>
 </table>
 <h2>Axiom check output</h2>
 <pre>&#x27;riemannHypothesis&#x27; depends on axioms: [propext, Classical.choice, Quot.sound]
@@ -116,13 +116,16 @@ def RiemannHypothesis : Prop :=
 /u/mrubinst/grhc/comparator.log:Running con-ron kernel on solution
 /u/mrubinst/grhc/comparator.log:con-ron: accepted 204583 declarations (--verified)
 /u/mrubinst/grhc/comparator.log:con-ron kernel accepts the solution
-/u/mrubinst/grhc/comparator.log:Running Lean default kernel on solution</pre>
+/u/mrubinst/grhc/comparator.log:Running Lean default kernel on solution
+/u/mrubinst/grhc/comparator.log:Lean default kernel accepts the solution</pre>
 <h2>How we are building it</h2>
 <p>One server (cpu160, University of Waterloo), local disk, <code>lake build</code> at slightly lowered priority because the machine is shared. The open-file limit is raised to the hard limit (the first attempt failed while unpacking the Mathlib cache with the default limit of 1024). Kernel replay runs <code>lake env leanchecker</code> on each of the project's modules, 48 at a time. Every result on this page comes from our own runs.</p>
 <h2>What a successful check will and won't mean</h2>
 <p>If the compile succeeds, the axioms are only the standard three, and the kernel accepts every module, then the five theorems are proved, assuming the Lean kernel is sound and Mathlib's definitions of &zeta; and of Dirichlet L-functions mean what they are supposed to. It says nothing about whether the shortened proof is the clearest one, or how its arguments compare with the original; we are studying that separately.</p>
 <h2>Log</h2>
 <ul class="log">
+<li><time>2026-11-26 05:34 UTC</time>comparator finished</li>
+<li><time>2026-11-26 05:34 UTC</time>comparator_paranoid ok</li>
 <li><time>2026-11-26 00:33 UTC</time>comparator_paranoid begin (lake comparator --paranoid --inadvisably-no-sandbox; kernels: Lean, leanchecker-paranoid, lean4lean, nanoda, con-leche, con-ron)</li>
 <li><time>2026-11-26 00:31 UTC</time>comparator attempt 1 did not start (nanoda_bin not on PATH); fixed and relaunched</li>
 <li><time>2026-11-26 00:31 UTC</time>comparator attempt 1 begin (lake comparator --paranoid --inadvisably-no-sandbox; kernels: Lean, leanchecker-paranoid, lean4lean, nanoda, con-leche, con-ron)</li>
