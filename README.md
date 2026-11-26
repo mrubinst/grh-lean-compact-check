@@ -2,7 +2,7 @@
 
 Independent build and check of **lsernau/grh-lean**, folder `grh-compact`, commit `72fead102f663d5c7a407964a13dc0cf9d977207` (25 Nov 2026), on our own hardware (UWaterloo cpu160, local disk). Lean v4.35.0, Mathlib `56a00585` as pinned by the project. This page reports only our own runs.
 
-Last updated: 2026-11-26 00:55 UTC. Status page: https://mrubinst.github.io/grh-lean-compact-check/
+Last updated: 2026-11-26 01:05 UTC. Status page: https://mrubinst.github.io/grh-lean-compact-check/
 
 ## Plan
 1. `lake exe cache get` (Mathlib oleans from the Mathlib cache)
@@ -29,7 +29,7 @@ modules_total=794 built=795 replay_ok=794 replay_bad=0
 2026-11-26T00:31:58Z comparator attempt 1 begin (lake comparator --paranoid --inadvisably-no-sandbox; kernels: Lean, leanchecker-paranoid, lean4lean, nanoda, con-leche, con-ron)
 2026-11-26T00:31:58Z comparator attempt 1 did not start (nanoda_bin not on PATH); fixed and relaunched
 2026-11-26T00:33:06Z comparator_paranoid begin (lake comparator --paranoid --inadvisably-no-sandbox; kernels: Lean, leanchecker-paranoid, lean4lean, nanoda, con-leche, con-ron)
---- load 425.32 428.11 428.33
+--- load 423.86 423.15 424.86
 --- axioms
 'riemannHypothesis' depends on axioms: [propext, Classical.choice, Quot.sound]
 'riemannZeta_eq_zero_re' depends on axioms: [propext, Classical.choice, Quot.sound]
@@ -56,6 +56,8 @@ def RiemannHypothesis : Prop :=
 /u/mrubinst/grhc/comparator.log:Build completed successfully (9841 jobs).
 /u/mrubinst/grhc/comparator.log:Exporting #[Quot, Quot.mk, Quot.lift, Quot.ind, riemannHypothesis, riemannZeta_eq_zero_re, LFunction_ne_zero_of_half_lt_re, LFunction_eq_zero_re, LFunction_eq_zero_re_of_isPrimitive, propext, Quot.sound, Classical.choice, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, Char.ofNat, List, eagerReduce, Nat, String, String.mk, Char, optParam, autoParam, semiOutParam, outParam] from Main
 /u/mrubinst/grhc/comparator.log:Running nanoda kernel on solution
+/u/mrubinst/grhc/comparator.log:nanoda kernel accepts the solution
+/u/mrubinst/grhc/comparator.log:Running Lean paranoid kernel on solution
 --- buildtime
 	Elapsed (wall clock) time (h:mm:ss or m:ss): 27:58.23
 	Maximum resident set size (kbytes): 9140112
