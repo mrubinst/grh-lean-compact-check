@@ -36,10 +36,12 @@ rows = [
  (state(has('build ok'), has('build begin'), 'build FAILED'), f'Full compile of all {total} project modules', f'{built_disp:,} of {total} compiled so far.'),
  (state(ax_ok, has('axioms begin'), 'axioms FAILED'), '<code>#print axioms</code> and types of the five main theorems', 'Expected: only <code>propext</code>, <code>Classical.choice</code>, <code>Quot.sound</code>; each theorem has the type fixed in <code>Statements.lean</code>.'),
  (state(has('replay done') and rbad == 0 and rok >= total, has('replay begin'), None) if rbad == 0 else 'bad', 'Kernel replay of every module (<code>leanchecker</code>)', f'{rok:,} of {total} accepted, {rbad} rejected.'),
- ('wait', 'Independent kernel (export + nanoda)', 'Planned after the replay.'),
+ (state(has('comparator_paranoid ok'), has('comparator_paranoid begin'), 'comparator_paranoid FAILED'), '<code>lake comparator --paranoid</code>: same statements, axioms, and six kernels', 'Compares the five theorems with <code>Challenge.lean</code> (the five statements with <code>sorry</code>), checks the axioms, and replays the export through Lean&rsquo;s kernel and the five external checkers bundled with Lean 4.35: <code>leanchecker-paranoid</code>, <code>lean4lean</code>, <code>nanoda</code>, <code>con-leche</code>, <code>con-ron</code>. Run with <code>--inadvisably-no-sandbox</code>: the cluster blocks the <code>bwrap</code> sandbox (AppArmor restricts unprivileged user namespaces), so this run does not have the sandbox guarantee against the project&rsquo;s own build code.'),
 ]
-if has('pipeline finished') and ax_ok and rbad == 0 and rok >= total:
-    top = '<span class="badge ok">Compile, axioms and kernel replay complete</span>'
+if has('comparator_paranoid ok') and ax_ok and rbad == 0 and rok >= total:
+    top = '<span class="badge ok">All checks complete</span>'
+elif has('pipeline finished') and ax_ok and rbad == 0 and rok >= total:
+    top = '<span class="badge wait">Compile, axioms and kernel replay complete; paranoid multi-kernel check running</span>'
 elif failed or rbad:
     top = '<span class="badge bad">A step failed; see the log</span>'
 else:
@@ -48,7 +50,9 @@ pct = 0
 if has('build begin'): pct = 10 + 60*built_disp/total
 if has('build ok'): pct = 70
 if has('replay begin'): pct = 75 + 25*rok/total
-if has('pipeline finished'): pct = 100
+if has('pipeline finished'): pct = 80
+if has('comparator_paranoid begin'): pct = 85
+if has('comparator finished'): pct = 100
 now = datetime.datetime.now(datetime.timezone.utc).strftime('%Y-%m-%d %H:%M UTC')
 log = ''.join(f'<li><time>{html.escape(l[:10]+" "+l[11:16])} UTC</time>{html.escape(l[21:])}</li>\n' for l in reversed(stages) if len(l) > 21)
 trs = ''.join(f'<tr><td>{badge(s)}</td><td><div class="what">{w}</div><div class="how">{d}</div></td></tr>\n' for s, w, d in rows)
@@ -81,6 +85,8 @@ page = f'''<!doctype html>
 {trs}</table>
 <h2>Axiom check output</h2>
 {axblock}
+<h2>Paranoid multi-kernel check (latest lines)</h2>
+<pre>{html.escape(chr(10).join(sec.get('comparator', [])).strip() or 'Not yet run.')}</pre>
 <h2>How we are building it</h2>
 <p>One server (cpu160, University of Waterloo), local disk, <code>lake build</code> at slightly lowered priority because the machine is shared. The open-file limit is raised to the hard limit (the first attempt failed while unpacking the Mathlib cache with the default limit of 1024). Kernel replay runs <code>lake env leanchecker</code> on each of the project's modules, 48 at a time. Every result on this page comes from our own runs.</p>
 <h2>What a successful check will and won't mean</h2>

@@ -58,13 +58,13 @@ footer{margin-top:3rem;color:var(--muted);font-size:.88rem}
 <body>
 <main>
 <h1>An independent check of the short Lean proof of RH and GRH</h1>
-<p class="sub">Checking the compact edition (about 76,000 lines) of the shortened Lean 4 proof posted by Luke Sernau with colleagues at Anthropic and Claude on 25 November 2026, a rewriting of the Alp&ouml;ge&ndash;Claude development. Private page; last updated 2026-11-26 00:31 UTC.</p>
+<p class="sub">Checking the compact edition (about 76,000 lines) of the shortened Lean 4 proof posted by Luke Sernau with colleagues at Anthropic and Claude on 25 November 2026, a rewriting of the Alp&ouml;ge&ndash;Claude development. Private page; last updated 2026-11-26 00:35 UTC.</p>
 <div class="box status">
-  <span class="badge ok">Compile, axioms and kernel replay complete</span>
+  <span class="badge wait">Compile, axioms and kernel replay complete; paranoid multi-kernel check running</span>
   <div>
     <strong>Where things stand.</strong> 794 of 794 modules compiled; kernel replay 794 accepted, 0 rejected.
-    <div class="bar" aria-label="progress"><span style="width:100%"></span></div>
-    <div style="font-size:.9rem;color:var(--muted)">Server load on cpu160: load 424.25 443.27 437.07. This page reloads every 5 minutes and is regenerated every 10.</div>
+    <div class="bar" aria-label="progress"><span style="width:85%"></span></div>
+    <div style="font-size:.9rem;color:var(--muted)">Server load on cpu160: load 423.86 432.36 433.95. This page reloads every 5 minutes and is regenerated every 10.</div>
   </div>
 </div>
 <h2>Checklist</h2>
@@ -76,7 +76,7 @@ footer{margin-top:3rem;color:var(--muted);font-size:.88rem}
 <tr><td><span class="badge ok">Done</span></td><td><div class="what">Full compile of all 794 project modules</div><div class="how">794 of 794 compiled so far.</div></td></tr>
 <tr><td><span class="badge ok">Done</span></td><td><div class="what"><code>#print axioms</code> and types of the five main theorems</div><div class="how">Expected: only <code>propext</code>, <code>Classical.choice</code>, <code>Quot.sound</code>; each theorem has the type fixed in <code>Statements.lean</code>.</div></td></tr>
 <tr><td><span class="badge ok">Done</span></td><td><div class="what">Kernel replay of every module (<code>leanchecker</code>)</div><div class="how">794 of 794 accepted, 0 rejected.</div></td></tr>
-<tr><td><span class="badge wait">Waiting</span></td><td><div class="what">Independent kernel (export + nanoda)</div><div class="how">Planned after the replay.</div></td></tr>
+<tr><td><span class="badge wait">Running</span></td><td><div class="what"><code>lake comparator --paranoid</code>: same statements, axioms, and six kernels</div><div class="how">Compares the five theorems with <code>Challenge.lean</code> (the five statements with <code>sorry</code>), checks the axioms, and replays the export through Lean&rsquo;s kernel and the five external checkers bundled with Lean 4.35: <code>leanchecker-paranoid</code>, <code>lean4lean</code>, <code>nanoda</code>, <code>con-leche</code>, <code>con-ron</code>. Run with <code>--inadvisably-no-sandbox</code>: the cluster blocks the <code>bwrap</code> sandbox (AppArmor restricts unprivileged user namespaces), so this run does not have the sandbox guarantee against the project&rsquo;s own build code.</div></td></tr>
 </table>
 <h2>Axiom check output</h2>
 <pre>&#x27;riemannHypothesis&#x27; depends on axioms: [propext, Classical.choice, Quot.sound]
@@ -91,12 +91,20 @@ LFunction_eq_zero_re : DirichletLZerosOnLine
 LFunction_eq_zero_re_of_isPrimitive : PrimitiveDirichletLZerosOnLine
 def RiemannHypothesis : Prop :=
 ∀ (s : ℂ), riemannZeta s = 0 → (¬∃ n, s = -2 * (↑n + 1)) → s ≠ 1 → s.re = 1 / 2</pre>
+<h2>Paranoid multi-kernel check (latest lines)</h2>
+<pre>/u/mrubinst/grhc/comparator.log:Build completed successfully (9049 jobs).
+/u/mrubinst/grhc/comparator.log:Exporting #[Quot, Quot.mk, Quot.lift, Quot.ind, riemannHypothesis, riemannZeta_eq_zero_re, LFunction_ne_zero_of_half_lt_re, LFunction_eq_zero_re, LFunction_eq_zero_re_of_isPrimitive, propext, Quot.sound, Classical.choice, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, Char.ofNat, List, eagerReduce, Nat, String, String.mk, Char, optParam, autoParam, semiOutParam, outParam] from Challenge
+/u/mrubinst/grhc/comparator.log:⚠ [9796/9841] Replayed New.Lift.CokernelKillers
+/u/mrubinst/grhc/comparator.log:Build completed successfully (9841 jobs).</pre>
 <h2>How we are building it</h2>
 <p>One server (cpu160, University of Waterloo), local disk, <code>lake build</code> at slightly lowered priority because the machine is shared. The open-file limit is raised to the hard limit (the first attempt failed while unpacking the Mathlib cache with the default limit of 1024). Kernel replay runs <code>lake env leanchecker</code> on each of the project's modules, 48 at a time. Every result on this page comes from our own runs.</p>
 <h2>What a successful check will and won't mean</h2>
 <p>If the compile succeeds, the axioms are only the standard three, and the kernel accepts every module, then the five theorems are proved, assuming the Lean kernel is sound and Mathlib's definitions of &zeta; and of Dirichlet L-functions mean what they are supposed to. It says nothing about whether the shortened proof is the clearest one, or how its arguments compare with the original; we are studying that separately.</p>
 <h2>Log</h2>
 <ul class="log">
+<li><time>2026-11-26 00:33 UTC</time>comparator_paranoid begin (lake comparator --paranoid --inadvisably-no-sandbox; kernels: Lean, leanchecker-paranoid, lean4lean, nanoda, con-leche, con-ron)</li>
+<li><time>2026-11-26 00:31 UTC</time>comparator attempt 1 did not start (nanoda_bin not on PATH); fixed and relaunched</li>
+<li><time>2026-11-26 00:31 UTC</time>comparator attempt 1 begin (lake comparator --paranoid --inadvisably-no-sandbox; kernels: Lean, leanchecker-paranoid, lean4lean, nanoda, con-leche, con-ron)</li>
 <li><time>2026-11-26 00:28 UTC</time>pipeline finished</li>
 <li><time>2026-11-26 00:28 UTC</time>replay done ok=794 bad=0</li>
 <li><time>2026-11-26 00:18 UTC</time>replay begin</li>

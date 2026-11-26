@@ -2,7 +2,7 @@
 
 Independent build and check of **lsernau/grh-lean**, folder `grh-compact`, commit `72fead102f663d5c7a407964a13dc0cf9d977207` (25 Nov 2026), on our own hardware (UWaterloo cpu160, local disk). Lean v4.35.0, Mathlib `56a00585` as pinned by the project. This page reports only our own runs.
 
-Last updated: 2026-11-26 00:31 UTC
+Last updated: 2026-11-26 00:35 UTC
 
 ## Plan
 1. `lake exe cache get` (Mathlib oleans from the Mathlib cache)
@@ -13,7 +13,7 @@ Last updated: 2026-11-26 00:31 UTC
 
 ## Current state
 ```
-modules_total=794 built=794 replay_ok=794 replay_bad=0
+modules_total=794 built=795 replay_ok=794 replay_bad=0
 --- stages
 2026-11-25T23:49:38Z start host=cpu160 commit=72fead102f663d5c7a407964a13dc0cf9d977207 lean=Lean (version 4.35.0
 2026-11-25T23:49:38Z cache_get begin
@@ -26,7 +26,10 @@ modules_total=794 built=794 replay_ok=794 replay_bad=0
 2026-11-26T00:18:40Z replay begin
 2026-11-26T00:28:15Z replay done ok=794 bad=0
 2026-11-26T00:28:15Z pipeline finished
---- load 424.25 443.27 437.07
+2026-11-26T00:31:58Z comparator attempt 1 begin (lake comparator --paranoid --inadvisably-no-sandbox; kernels: Lean, leanchecker-paranoid, lean4lean, nanoda, con-leche, con-ron)
+2026-11-26T00:31:58Z comparator attempt 1 did not start (nanoda_bin not on PATH); fixed and relaunched
+2026-11-26T00:33:06Z comparator_paranoid begin (lake comparator --paranoid --inadvisably-no-sandbox; kernels: Lean, leanchecker-paranoid, lean4lean, nanoda, con-leche, con-ron)
+--- load 423.86 432.36 433.95
 --- axioms
 'riemannHypothesis' depends on axioms: [propext, Classical.choice, Quot.sound]
 'riemannZeta_eq_zero_re' depends on axioms: [propext, Classical.choice, Quot.sound]
@@ -46,6 +49,11 @@ LFunction_eq_zero_re : DirichletLZerosOnLine
 LFunction_eq_zero_re_of_isPrimitive : PrimitiveDirichletLZerosOnLine
 def RiemannHypothesis : Prop :=
 ∀ (s : ℂ), riemannZeta s = 0 → (¬∃ n, s = -2 * (↑n + 1)) → s ≠ 1 → s.re = 1 / 2
+--- comparator
+/u/mrubinst/grhc/comparator.log:Build completed successfully (9049 jobs).
+/u/mrubinst/grhc/comparator.log:Exporting #[Quot, Quot.mk, Quot.lift, Quot.ind, riemannHypothesis, riemannZeta_eq_zero_re, LFunction_ne_zero_of_half_lt_re, LFunction_eq_zero_re, LFunction_eq_zero_re_of_isPrimitive, propext, Quot.sound, Classical.choice, Nat.add, Nat.sub, Nat.mul, Nat.pow, Nat.gcd, Nat.div, Nat.mod, Nat.beq, Nat.ble, Nat.land, Nat.lor, Nat.xor, Nat.shiftLeft, Nat.shiftRight, String.ofList, Char.ofNat, List, eagerReduce, Nat, String, String.mk, Char, optParam, autoParam, semiOutParam, outParam] from Challenge
+/u/mrubinst/grhc/comparator.log:⚠ [9796/9841] Replayed New.Lift.CokernelKillers
+/u/mrubinst/grhc/comparator.log:Build completed successfully (9841 jobs).
 --- buildtime
 	Elapsed (wall clock) time (h:mm:ss or m:ss): 27:58.23
 	Maximum resident set size (kbytes): 9140112

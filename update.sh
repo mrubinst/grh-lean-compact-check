@@ -1,7 +1,7 @@
 #!/bin/bash
 # Pull progress from cpu160 and regenerate README.md (private status page). Pushes only on change.
 cd "$(dirname "$0")"
-P=$(ssh -o BatchMode=yes -o ConnectTimeout=20 -J mrubinst@biglinux.math.uwaterloo.ca mrubinst@cpu160 '/u/mrubinst/grhc/progress.sh; echo "--- axioms"; cat /u/mrubinst/grhc/axioms.out 2>/dev/null | head -20; echo "--- our_axioms"; cat /u/mrubinst/grhc/our_axioms.out 2>/dev/null | head -30; echo "--- buildtime"; grep -E "Elapsed|Maximum resident" /u/mrubinst/grhc/build.time 2>/dev/null; true') || exit 0
+P=$(ssh -o BatchMode=yes -o ConnectTimeout=20 -J mrubinst@biglinux.math.uwaterloo.ca mrubinst@cpu160 '/u/mrubinst/grhc/progress.sh; echo "--- axioms"; cat /u/mrubinst/grhc/axioms.out 2>/dev/null | head -20; echo "--- our_axioms"; cat /u/mrubinst/grhc/our_axioms.out 2>/dev/null | head -30; echo "--- comparator"; grep -E "Exporting|kernel|accepted|rejected|error|Success|success|verdict|OK|FAIL" /u/mrubinst/grhc/comparator.log /u/mrubinst/grhc/comparator.err 2>/dev/null | grep -v "^.*warning" | tail -n 25; echo "--- buildtime"; grep -E "Elapsed|Maximum resident" /u/mrubinst/grhc/build.time 2>/dev/null; true') || exit 0
 NOW=$(date -u +"%Y-%m-%d %H:%M UTC")
 {
 echo "# GRH Lean check: compact edition (private)"
@@ -27,5 +27,5 @@ echo "\`src/Statements.lean\` (imports only Mathlib) is identical, apart from bl
 } > README.md
 printf "%s\n" "$P" | python3 gen.py
 git add -A; git diff --cached --quiet || { git commit -qm "status $NOW"; git push -q origin HEAD:main 2>/dev/null; }
-grep -q "pipeline finished" <<<"$P" && echo FINISHED
+grep -q "comparator finished" <<<"$P" && echo FINISHED
 exit 0
