@@ -29,7 +29,7 @@ built_disp = min(built, total)
 ax = '\n'.join(sec.get('our_axioms', [])).strip()
 ax_ok = has('our_axioms ok') and ax.count('[propext, Classical.choice, Quot.sound]') >= 5 and 'sorry' not in ax
 rows = [
- (state(True, True, None), 'Source pinned to the authors\' release', 'Repository <code>lsernau/grh-lean</code>, folder <code>grh-compact</code>, commit <code>72fead10</code> (the only commit). Same commit as the independent audits reported on Zulip.'),
+ (state(True, True, None), 'Source pinned to the authors\' release', 'Repository <a href="https://github.com/lsernau/grh-lean/tree/72fead102f663d5c7a407964a13dc0cf9d977207"><code>lsernau/grh-lean</code></a>, folder <code>grh-compact</code>, commit <code>72fead10</code> (the only commit). Same commit as the independent audits reported on Zulip.'),
  (state(True, True, None), 'The theorem statements say what they should', '<code>src/Statements.lean</code> imports only Mathlib and is identical (apart from blank lines) to the statements we checked for the original development on 20&ndash;21 Nov.'),
  (state(True, True, None), 'Static scan for unproved assumptions and kernel bypasses', 'No <code>axiom</code>, <code>sorry</code>, <code>native_decide</code>, <code>unsafe</code>, <code>implemented_by</code>, <code>@[extern]</code>, and no <code>macro</code>, <code>syntax</code>, <code>notation</code> or <code>elab</code> declarations in the project source.'),
  (state(has('cache_get ok'), has('cache_get begin'), 'cache_get FAILED'), 'Mathlib from its official cache', 'Mathlib commit <code>56a00585</code> as pinned by the project; Lean v4.35.0.'),
@@ -71,7 +71,8 @@ page = f'''<!doctype html>
 <body>
 <main>
 <h1>An independent check of the short Lean proof of RH and GRH</h1>
-<p class="sub">Checking the compact edition (about 76,000 lines) of the shortened Lean 4 proof posted by Luke Sernau with colleagues at Anthropic and Claude on 25 November 2026, a rewriting of the Alp&ouml;ge&ndash;Claude development. Private page; last updated {now}.</p>
+<p class="sub">Checking the compact edition (about 76,000 lines) of the shortened Lean 4 proof posted by Luke Sernau with colleagues at Anthropic and Claude on 25 November 2026, a rewriting of the Alp&ouml;ge&ndash;Claude development. Last updated {now}.</p>
+<p class="sub"><a href="https://www.math.uwaterloo.ca/~mrubinst/alpoge_claude_grh/">&larr; Michael Rubinstein's page on the Alp&ouml;ge/Claude proof</a> &middot; <a href="https://mrubinst.github.io/grh-lean-verification/">our check of the original 17-million-line development</a> &middot; <a href="https://github.com/mrubinst/grh-lean-compact-check">GitHub repository</a> (scripts and the source of this page)</p>
 <div class="box status">
   {top}
   <div>
@@ -94,7 +95,7 @@ page = f'''<!doctype html>
 <h2>Log</h2>
 <ul class="log">
 {log}</ul>
-<footer>The checks are run by Claude Code (an AI agent) on the account owner's university compute allocation. Source of this page: the private repository <code>mrubinst/grh-lean-compact-check</code>.</footer>
+<footer>The checks are run by Claude Code (an AI agent) on the account owner's university compute allocation. Source of this page: <a href="https://github.com/mrubinst/grh-lean-compact-check">github.com/mrubinst/grh-lean-compact-check</a>.</footer>
 </main>
 </body>
 </html>

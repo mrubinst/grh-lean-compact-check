@@ -4,11 +4,11 @@ cd "$(dirname "$0")"
 P=$(ssh -o BatchMode=yes -o ConnectTimeout=20 -J mrubinst@biglinux.math.uwaterloo.ca mrubinst@cpu160 '/u/mrubinst/grhc/progress.sh; echo "--- axioms"; cat /u/mrubinst/grhc/axioms.out 2>/dev/null | head -20; echo "--- our_axioms"; cat /u/mrubinst/grhc/our_axioms.out 2>/dev/null | head -30; echo "--- comparator"; grep -E "Exporting|kernel|accepted|rejected|error|Success|success|verdict|OK|FAIL" /u/mrubinst/grhc/comparator.log /u/mrubinst/grhc/comparator.err 2>/dev/null | grep -v "^.*warning" | tail -n 25; echo "--- buildtime"; grep -E "Elapsed|Maximum resident" /u/mrubinst/grhc/build.time 2>/dev/null; true') || exit 0
 NOW=$(date -u +"%Y-%m-%d %H:%M UTC")
 {
-echo "# GRH Lean check: compact edition (private)"
+echo "# GRH Lean check: compact edition"
 echo
 echo "Independent build and check of **lsernau/grh-lean**, folder \`grh-compact\`, commit \`72fead102f663d5c7a407964a13dc0cf9d977207\` (25 Nov 2026), on our own hardware (UWaterloo cpu160, local disk). Lean v4.35.0, Mathlib \`56a00585\` as pinned by the project. This page reports only our own runs."
 echo
-echo "Last updated: $NOW"
+echo "Last updated: $NOW. Status page: https://mrubinst.github.io/grh-lean-compact-check/"
 echo
 echo "## Plan"
 echo "1. \`lake exe cache get\` (Mathlib oleans from the Mathlib cache)"
